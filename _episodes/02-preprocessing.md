@@ -132,7 +132,7 @@ macs14 -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -c IMR90_Input_chr6_rmdup.sorted.b
 
 ```bash
 
-bedtools intersect -a
+bedtools intersect -a IMR90_H3K4me3_no_Input_peaks.bed -b IMR90_H3K4me3_with_Input_peaks.bed -v > potential_artifact_peaks.bed
 ```
 
 #### visualize in IGV
