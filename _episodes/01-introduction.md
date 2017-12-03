@@ -12,4 +12,5 @@ objectives:
 keypoints:
 - "ChIP-seq is sequencing specific regions of the genome"
 - "ChIP-seq peaks can give insights of where the protein of interest is enriched in the genome"
+- "target 20 million reads for ChIP-seq experiment"
 ---
