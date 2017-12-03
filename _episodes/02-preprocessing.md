@@ -13,7 +13,7 @@ keypoints:
 - "Peak calling"
 ---
 
-### get the raw fastq data
+#### get the raw fastq data
 
 ```bash
 # go to your home directory
@@ -118,7 +118,7 @@ samtools flagstat IMR90_H3K4me3_chr6_rmdup.sorted.bam
 peak calling without Input control
 
 ```bash
-
+## ~ 2mins to finish
 macs14 -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -f BAM -g hs --outdir peaks -n IMR90_H3K4me3_no_Input -p 1e-5 --bdg
 ```
 
@@ -131,7 +131,11 @@ macs14 -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -c IMR90_Input_chr6_rmdup.sorted.b
 #### bedtools to compare the peak sets
 
 ```bash
+## how many peaks?
+cd peaks
+wc -l *peaks.bed
 
+## what are the unique peaks that are called without Input?
 bedtools intersect -a IMR90_H3K4me3_no_Input_peaks.bed -b IMR90_H3K4me3_with_Input_peaks.bed -v > potential_artifact_peaks.bed
 ```
 
@@ -139,7 +143,7 @@ bedtools intersect -a IMR90_H3K4me3_no_Input_peaks.bed -b IMR90_H3K4me3_with_Inp
 
 peaks and bedgraphs are the two files that you will need to download to your local computer for IGV visualization.
 
-** go to your own local computer**
+**go to your own local computer**
 
 ```bash
 rsync -avhP username@101.59:~/ChIP-seq/   .
