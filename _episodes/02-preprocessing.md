@@ -119,6 +119,9 @@ This step by step process is OK, but it generates too many intermediate files.
 
 For the power users, we use `|` pipe to chain all the step together:
 
+**DO NOT RUN THIS**
+only for power users.
+
 ```bash
 
 bowtie2  -x /course/ChIPseq_lab/bowtie_index/hg19 -U IMR90_H3K4me3_chr6.fq -S |  samtools view -Sb -F 4 - | samtools rmdup -s /dev/stdin /dev/stdout |  samtools sort -m 2G  - IMR90_H3K4me3_chr6_rmdup.sorted
@@ -128,7 +131,6 @@ samtools index IMR90_H3K4me3_chr6_rmdup.sorted.bam
 
 bowtie2  -x /course/ChIPseq_lab/bowtie_index/hg19 -U IMR90_Input_chr6.fq -S |  samtools view -Sb -F 4 - | samtools rmdup -s /dev/stdin /dev/stdout |  samtools sort -m 2G  -  IMR90_Input_chr6_rmdup.sorted
 
-/bioinfo/bowtie2/bowtie2  -x /course/ChIPseq_lab/bowtie_index/hg19 -U IMR90_Input_chr6.fq -S |  /bioinfo/samtools view -Sb -F 4 - | /bioinfo/samtools rmdup -s /dev/stdin /dev/stdout |  /bioinfo/samtools sort -m 2G  -  IMR90_Input_chr6_rmdup.sorted
 ```
 
 #### get statistics of the bam file
@@ -148,7 +150,7 @@ we will use [MACS](http://liulab.dfci.harvard.edu/MACS/) for peak calling, one o
 **Step1** peak calling without Input control:
 
 ```bash
-## ~ 2mins to finish
+## ~ 10mins to finish
 macs -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -f BAM -g hs --outdir peaks -n IMR90_H3K4me3_no_Input -p 1e-5 --bdg
 ```
 
@@ -179,6 +181,6 @@ peaks and bedgraphs are the two files that you will need to download to your loc
 ```bash
 mkdir ChIP_seq_lab_results
 cd ChIP_seq_lab_results
-rsync -avhP username@139.52.107.59:~/ChIP-seq/ .
+rsync -avhP username@139.52.107.59:~/ChIP-seq/peaks .
 ```
-load the bedgraph file and the bed file for visualization. go to chromosome 6! we only have data there.
+load the bedgraph file for chr6 and the bed file for visualization. go to chromosome 6! we only have data there.
