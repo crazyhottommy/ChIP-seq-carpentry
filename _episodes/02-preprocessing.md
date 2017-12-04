@@ -61,7 +61,7 @@ bedtools intersectBed : `/bioinfo/intersectBed`
 
 ```bash
 # use only 1 cpu
-bowtie2 -x /bioinfo/bowtie2/hg19/hg19 -q IMR90_H3K4me3_chr6.fq -S IMR90_H3K4me3_chr6.sam
+bowtie2 -x /bioinfo/bowtie2/hg19/hg19 -U IMR90_H3K4me3_chr6.fq --thread 1 -S IMR90_H3K4me3_chr6.sam
 ### reads processed: 247026
 # reads with at least one reported alignment: 246922 (99.96%)
 # reads that failed to align: 46 (0.02%)
@@ -78,7 +78,7 @@ bowtie2 -x /bioinfo/bowtie2/hg19/hg19 -q IMR90_H3K4me3_chr6.fq -S IMR90_H3K4me3_
 
 ```bash
 ## conver the sam to bam, bam is a binary form of sam
-samtools view -Sb -F 4 IMR90_H3K4me3_chr6.sam > IMR90_H3K4me3_chr6.bam
+samtools view -Sb IMR90_H3K4me3_chr6.sam > IMR90_H3K4me3_chr6.bam
 ```
 
 
