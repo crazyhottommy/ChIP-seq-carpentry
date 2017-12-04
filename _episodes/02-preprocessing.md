@@ -47,20 +47,21 @@ fastqc IMR90_Input_chr6.fq
 
 I will walk through you for the H3K4me3 IP fastq file.
 
-full path
+**full path**
 
-
-full path bowtie: `/course/ChIPseq_lab/bowtie-1.2.1.1/bowtie`
-
-bowtie index path: `/course/ChIPseq_lab/bowtie_index/hg19`
+bowtie2: `/bioinfo/bowtie2/bowtie2`
 
 samtools path: `/bioinfo/samtools`
+
+bedtools intersectBed : `/bioinfo/intersectBed`
+
+**Note**: replace all the commands below with the full path of the program.
 
 **Step1:**
 
 ```bash
 # use only 1 cpu
-bowtie --chunkmbs 320 -m 1 --best -p 1 /course/ChIP-seq_lab/bowtie_index/hg19 -q IMR90_H3K4me3_chr6.fq -S > IMR90_H3K4me3_chr6.sam
+bowtie2 -x /bioinfo/bowtie2/hg19/hg19 -q IMR90_H3K4me3_chr6.fq -S IMR90_H3K4me3_chr6.sam
 ### reads processed: 247026
 # reads with at least one reported alignment: 246922 (99.96%)
 # reads that failed to align: 46 (0.02%)
@@ -96,7 +97,7 @@ samtools rmdup -s IMR90_H3K4me3_chr6.bam IMR90_H3K4me3_chr6_rmdup.bam
 ```bash
 ## sort the bam by coordinates
 
-samtools sort -m 2G -@ 1 IMR90_H3K4me3_chr6_rmdup.bam IMR90_H3K4me3_chr6_rmdup.sorted
+samtools sort -m 2G IMR90_H3K4me3_chr6_rmdup.bam IMR90_H3K4me3_chr6_rmdup.sorted
 
 ## index the bam
 samtools index IMR90_H3K4me3_chr6_rmdup.sorted.bam
@@ -111,7 +112,7 @@ samtools index IMR90_H3K4me3_chr6_rmdup.sorted.bam
 ls
 
 ## view the alignments
-samtools view -h IMR90_H3K4me3.sorted.bam | less -S
+samtools view -h IMR90_H3K4me3_chr6_rmdup.sorted.bam | less -S
 ```
 
 This step by step process is OK, but it generates too many intermediate files.
@@ -120,12 +121,14 @@ For the power users, we use `|` pipe to chain all the step together:
 
 ```bash
 
-bowtie --chunkmbs 320 -m 1 --best -p 1 /scratch/genomic_med/apps/annot/indexes/bowtie/hg19 -q IMR90_H3K4me3_chr6.fq -S |  samtools view -Sb -F 4 - | samtools rmdup -s /dev/stdin /dev/stdout |  samtools sort -m 2G -@ 1 -T IMR.tmp -o IMR90_H3K4me3_chr6_rmdup.sorted.bam
+bowtie2  -x /course/ChIPseq_lab/bowtie_index/hg19 -U IMR90_H3K4me3_chr6.fq -S |  samtools view -Sb -F 4 - | samtools rmdup -s /dev/stdin /dev/stdout |  samtools sort -m 2G  - IMR90_H3K4me3_chr6_rmdup.sorted
 
 samtools index IMR90_H3K4me3_chr6_rmdup.sorted.bam
 
 
-bowtie --chunkmbs 320 -m 1 --best -p 1 /scratch/genomic_med/apps/annot/indexes/bowtie/hg19 -q IMR90_Input_chr6.fq -S |  samtools view -Sb -F 4 - | samtools rmdup -s /dev/stdin /dev/stdout |  samtools sort -m 2G -@ 1 -T Input.tmp -o IMR90_Input_chr6_rmdup.sorted.bam
+bowtie2  -x /course/ChIPseq_lab/bowtie_index/hg19 -U IMR90_Input_chr6.fq -S |  samtools view -Sb -F 4 - | samtools rmdup -s /dev/stdin /dev/stdout |  samtools sort -m 2G  -  IMR90_Input_chr6_rmdup.sorted
+
+/bioinfo/bowtie2/bowtie2  -x /course/ChIPseq_lab/bowtie_index/hg19 -U IMR90_Input_chr6.fq -S |  /bioinfo/samtools view -Sb -F 4 - | /bioinfo/samtools rmdup -s /dev/stdin /dev/stdout |  /bioinfo/samtools sort -m 2G  -  IMR90_Input_chr6_rmdup.sorted
 ```
 
 #### get statistics of the bam file
@@ -146,13 +149,13 @@ we will use [MACS](http://liulab.dfci.harvard.edu/MACS/) for peak calling, one o
 
 ```bash
 ## ~ 2mins to finish
-macs14 -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -f BAM -g hs --outdir peaks -n IMR90_H3K4me3_no_Input -p 1e-5 --bdg
+macs -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -f BAM -g hs --outdir peaks -n IMR90_H3K4me3_no_Input -p 1e-5 --bdg
 ```
 
 **Step2:** peak calling with Input control
 
 ```bash
-macs14 -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -c IMR90_Input_chr6_rmdup.sorted.bam -f BAM -g hs --outdir peaks -n IMR90_H3K4me3_with_Input -p 1e-5 --bdg
+macs -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -c IMR90_Input_chr6_rmdup.sorted.bam -f BAM -g hs --outdir peaks -n IMR90_H3K4me3_with_Input -p 1e-5 --bdg
 ```
 
 #### bedtools to compare the peak sets
