@@ -60,7 +60,7 @@ samtools path: `/bioinfo/samtools`
 
 ```bash
 # use only 1 cpu
-bowtie --chunkmbs 320 -m 1 --best -p 1 /courses/bowtie_index/hg19 -q IMR90_H3K4me3_chr6.fq -S > IMR90_H3K4me3_chr6.sam
+bowtie --chunkmbs 320 -m 1 --best -p 1 /course/ChIP-seq_lab/bowtie_index/hg19 -q IMR90_H3K4me3_chr6.fq -S > IMR90_H3K4me3_chr6.sam
 ### reads processed: 247026
 # reads with at least one reported alignment: 246922 (99.96%)
 # reads that failed to align: 46 (0.02%)
