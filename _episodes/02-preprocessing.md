@@ -56,6 +56,8 @@ bowtie index path: `/course/ChIPseq_lab/bowtie_index/hg19`
 
 samtools path: `/bioinfo/samtools`
 
+**Step1:**
+
 ```bash
 # use only 1 cpu
 bowtie --chunkmbs 320 -m 1 --best -p 1 /courses/bowtie_index/hg19 -q IMR90_H3K4me3_chr6.fq -S > IMR90_H3K4me3_chr6.sam
@@ -69,18 +71,29 @@ bowtie --chunkmbs 320 -m 1 --best -p 1 /courses/bowtie_index/hg19 -q IMR90_H3K4m
 #user    1m28.444s
 #sys     0m1.181s
 
-### save the standard error
-bowtie --chunkmbs 320 -m 1 --best -p 1 /courses/bowtie_index/hg19 -q IMR90_H3K4me3_chr6.fq -S > IMR90_H3K4me3_chr6.sam 2> bowtie.log
+```
 
+**step2:**
+
+```bash
 ## conver the sam to bam, bam is a binary form of sam
 samtools view -Sb -F 4 IMR90_H3K4me3_chr6.sam > IMR90_H3K4me3_chr6.bam
+```
 
+
+**step3:**
+
+```bash
 ## remove duplicates (there is no duplicates in this example)
 ## remove duplicates that have exactly the same start and end coordinates. most likely
 ## due to PCR over-amplification
 ## -s for single end; -S for paired-end
 samtools rmdup -s IMR90_H3K4me3_chr6.bam IMR90_H3K4me3_chr6_rmdup.bam
+```
 
+**step4:**
+
+```bash
 ## sort the bam by coordinates
 
 samtools sort -m 2G -@ 1 IMR90_H3K4me3_chr6_rmdup.bam IMR90_H3K4me3_chr6_rmdup.sorted
@@ -89,7 +102,11 @@ samtools sort -m 2G -@ 1 IMR90_H3K4me3_chr6_rmdup.bam IMR90_H3K4me3_chr6_rmdup.s
 samtools index IMR90_H3K4me3_chr6_rmdup.sorted.bam
 
 # IMR90_H3K4me3_chr6_rmdup.sorted.bam index will be created.
+```
 
+**step5:**
+
+```bash
 # check again
 ls
 
@@ -123,14 +140,16 @@ samtools flagstat IMR90_H3K4me3_chr6_rmdup.sorted.bam
 
 #### Peak calling
 
-peak calling without Input control
+we will use [MACS](http://liulab.dfci.harvard.edu/MACS/) for peak calling, one of the most popular callers.
+
+**Step1** peak calling without Input control:
 
 ```bash
 ## ~ 2mins to finish
 macs14 -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -f BAM -g hs --outdir peaks -n IMR90_H3K4me3_no_Input -p 1e-5 --bdg
 ```
 
-peak calling with Input control
+**Step2:** peak calling with Input control
 
 ```bash
 macs14 -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -c IMR90_Input_chr6_rmdup.sorted.bam -f BAM -g hs --outdir peaks -n IMR90_H3K4me3_with_Input -p 1e-5 --bdg
@@ -141,10 +160,11 @@ macs14 -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -c IMR90_Input_chr6_rmdup.sorted.b
 ```bash
 ## how many peaks?
 cd peaks
-wc -l *peaks.bed
+wc -l IMR90_H3K4me3_no_Input_peaks.bed
+wc -l IMR90_H3K4me3_with_Input_peaks.bed
 
 ## what are the unique peaks that are called without Input?
-bedtools intersect -a IMR90_H3K4me3_no_Input_peaks.bed -b IMR90_H3K4me3_with_Input_peaks.bed -v > potential_artifact_peaks.bed
+/bioinfo/intersectBed -a IMR90_H3K4me3_no_Input_peaks.bed -b IMR90_H3K4me3_with_Input_peaks.bed -v > potential_artifact_peaks.bed
 ```
 
 #### visualize in IGV
