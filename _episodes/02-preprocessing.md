@@ -16,6 +16,7 @@ keypoints:
 #### get the raw fastq data
 
 ```bash
+ssh test2017@139.52.107.59
 # go to your home directory
 cd ~
 # make a new directory
@@ -24,16 +25,18 @@ mkdir ChIP-seq
 ## go insde
 cd ChIP-seq
 
-## coopy the fastqs
-cp /courses/rai_ChIP-seq/*fq .
+## copy the fastqs
+cp /course/ChIP-seq_lab/fastqs/*fq .
 
-## have a look
+## have a look, you should see two fastqs in the folder
 ls
 
 ```
 
 
 #### quality control
+
+**skip it**
 
 ```bash
 fastqc IMR90_H3K4me3_chr6.fq
@@ -43,6 +46,15 @@ fastqc IMR90_Input_chr6.fq
 #### Alignment
 
 I will walk through you for the H3K4me3 IP fastq file.
+
+full path
+
+
+full path bowtie: `/course/ChIPseq_lab/bowtie-1.2.1.1/bowtie`
+
+bowtie index path: `/course/ChIPseq_lab/bowtie_index/hg19`
+
+samtools path: `/bioinfo/samtools`
 
 ```bash
 # use only 1 cpu
@@ -60,10 +72,6 @@ bowtie --chunkmbs 320 -m 1 --best -p 1 /courses/bowtie_index/hg19 -q IMR90_H3K4m
 ### save the standard error
 bowtie --chunkmbs 320 -m 1 --best -p 1 /courses/bowtie_index/hg19 -q IMR90_H3K4me3_chr6.fq -S > IMR90_H3K4me3_chr6.sam 2> bowtie.log
 
-
-## check the sam file
-less -S IMR90_H3K4me3_chr6.sam
-
 ## conver the sam to bam, bam is a binary form of sam
 samtools view -Sb -F 4 IMR90_H3K4me3_chr6.sam > IMR90_H3K4me3_chr6.bam
 
@@ -75,7 +83,7 @@ samtools rmdup -s IMR90_H3K4me3_chr6.bam IMR90_H3K4me3_chr6_rmdup.bam
 
 ## sort the bam by coordinates
 
-samtools sort -m 2G -@ 1 -T IMR.tmp -o IMR90_H3K4me3_chr6_rmdup.sorted.bam IMR90_H3K4me3_chr6_rmdup.bam
+samtools sort -m 2G -@ 1 IMR90_H3K4me3_chr6_rmdup.bam IMR90_H3K4me3_chr6_rmdup.sorted
 
 ## index the bam
 samtools index IMR90_H3K4me3_chr6_rmdup.sorted.bam
@@ -146,5 +154,8 @@ peaks and bedgraphs are the two files that you will need to download to your loc
 **go to your own local computer**
 
 ```bash
-rsync -avhP username@101.59:~/ChIP-seq/   .
+mkdir ChIP_seq_lab_results
+cd ChIP_seq_lab_results
+rsync -avhP username@139.52.107.59:~/ChIP-seq/ .
 ```
+load the bedgraph file and the bed file for visualization. go to chromosome 6! we only have data there.
