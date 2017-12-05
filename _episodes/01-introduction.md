@@ -58,13 +58,13 @@ Download the `fastq.gz` file:
 
 IMR90 is a human fibroblast cell line derived from lungs of a 16-week female fetus.
 
-```bash
-
+~~~
 # H3K4me3
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR029/SRR029610/SRR029610.fastq.gz
 
 # Input
 wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR037/SRR037635/SRR037635.fastq.gz
-```
+~~~
+{: .bash}
 
 I extracted the reads only on chromosome 6 to get small size fastqs.
