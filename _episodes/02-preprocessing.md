@@ -184,3 +184,9 @@ cd ChIP_seq_lab_results
 rsync -avhP username@139.52.107.59:~/ChIP-seq/peaks .
 ```
 load the bedgraph file for chr6 and the bed file for visualization. go to chromosome 6! we only have data there.
+
+e.g.
+
+Screenshot of VEGFA and nearby loci:
+
+![](../fig/VEGFA_loci.png)
