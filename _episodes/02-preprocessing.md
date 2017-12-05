@@ -15,7 +15,7 @@ keypoints:
 
 ### get the raw fastq data
 
-```bash
+~~~
 ssh test2017@139.52.107.59
 # go to your home directory
 cd ~
@@ -30,8 +30,8 @@ cp /course/ChIP-seq_lab/fastqs/*fq .
 
 ## have a look, you should see two fastqs in the folder
 ls
-
-```
+~~~
+{: .bash}
 
 
 ### quality control
