@@ -146,6 +146,8 @@ samtools flagstat IMR90_H3K4me3_chr6_rmdup.sorted.bam
 >> samtools index IMR90_Input_chr6_rmdup.sorted.bam
 >> ~~~
 >> {: .bash}
+> {: .solution}
+{: .challenge}
 
 ### chain the steps by a pipe
 
@@ -164,8 +166,10 @@ only for power users.
 
 >>bowtie2  -x /course/ChIPseq_lab/bowtie_index/hg19 -U IMR90_Input_chr6.fq -S |  samtools view -Sb -F 4 - | samtools rmdup -s /dev/stdin /dev/stdout |  samtools sort -m 2G  -  IMR90_Input_chr6_rmdup.sorted
 >>samtools index IMR90_Input_chr6_rmdup.sorted.bam
-~~~
-{: .bash}
+>> ~~~
+>> {: .bash}
+> {: .solution}
+{: .challenge}
 
 ### Peak calling
 
