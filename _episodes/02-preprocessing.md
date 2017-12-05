@@ -132,6 +132,7 @@ samtools flagstat IMR90_H3K4me3_chr6_rmdup.sorted.bam
 {: .bash}
 
 ### your turn to align the Input file
+
 > ### Exercise
 >
 >  How do you align the Input fastq file?
@@ -146,6 +147,7 @@ samtools flagstat IMR90_H3K4me3_chr6_rmdup.sorted.bam
 >> samtools index IMR90_Input_chr6_rmdup.sorted.bam
 >> ~~~
 >> {: .bash}
+>>
 > {: .solution}
 {: .challenge}
 
