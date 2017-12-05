@@ -160,18 +160,15 @@ For the power users, we use `|` pipe to chain all the step together:
 **DO NOT RUN THIS**
 only for power users.
 
->> ### Magic power
->>~~~
+~~~
+bowtie2  -x /course/ChIPseq_lab/bowtie_index/hg19 -U IMR90_H3K4me3_chr6.fq -S |  samtools view -Sb -F 4 - | samtools rmdup -s /dev/stdin /dev/stdout |  samtools sort -m 2G  - IMR90_H3K4me3_chr6_rmdup.sorted
+samtools index IMR90_H3K4me3_chr6_rmdup.sorted.bam
 
->>bowtie2  -x /course/ChIPseq_lab/bowtie_index/hg19 -U IMR90_H3K4me3_chr6.fq -S |  samtools view -Sb -F 4 - | samtools rmdup -s /dev/stdin /dev/stdout |  samtools sort -m 2G  - IMR90_H3K4me3_chr6_rmdup.sorted
->>samtools index IMR90_H3K4me3_chr6_rmdup.sorted.bam
+bowtie2  -x /course/ChIPseq_lab/bowtie_index/hg19 -U IMR90_Input_chr6.fq -S |  samtools view -Sb -F 4 - | samtools rmdup -s /dev/stdin /dev/stdout |  samtools sort -m 2G  -  IMR90_Input_chr6_rmdup.sorted
+samtools index IMR90_Input_chr6_rmdup.sorted.bam
+~~~
+{: .bash}
 
->>bowtie2  -x /course/ChIPseq_lab/bowtie_index/hg19 -U IMR90_Input_chr6.fq -S |  samtools view -Sb -F 4 - | samtools rmdup -s /dev/stdin /dev/stdout |  samtools sort -m 2G  -  IMR90_Input_chr6_rmdup.sorted
->>samtools index IMR90_Input_chr6_rmdup.sorted.bam
->> ~~~
->> {: .bash}
-> {: .solution}
-{: .challenge}
 
 ### Peak calling
 
