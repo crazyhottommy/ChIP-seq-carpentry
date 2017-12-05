@@ -7,7 +7,7 @@ questions:
 - "How do you analyze the ChIP-seq data"
 objectives:
 - "Understand what the ChIP-seq assay is measuring"
-- "Undertand how to process raw ChIP-seq fastqs to final peaks for visualization"
+- "Undertand steps to process raw ChIP-seq fastqs to final peaks for visualization"
 - "know what the data set is"
 keypoints:
 - "ChIP-seq is sequencing specific regions of the genome"
@@ -15,13 +15,13 @@ keypoints:
 - "target 20 million reads for ChIP-seq experiment"
 ---
 
-#### What is ChIP-seq?
+### What is ChIP-seq?
 Chromatin immunoprecipitation (ChIP) followed by high-throughput DNA sequencing (ChIP-seq) is a technique to map genome-wide transcription
 factor binding sites and histone-modification enriched regions.
 
 Briefly, DNA bounding proteins and DNA (Chromatin) are cross-linked by formaldehyde and the chromatin is sheared by sonication into small fragments (typically 200 ~ 600 bp). The protein-DNA complex is immnuoprecipitated by an antibody specific to the protein of interest. Then the DNA is purified and made to a library for sequencing. After aligning the sequencing reads to a reference genome, the genomic regions with many reads enriched are where the protein of interest bounds. ChIP-seq is a critical method for dissecting the regulatory mechanisms of gene expression.
 
-#### What are the processing steps for ChIP-seq data?
+### What are the processing steps for ChIP-seq data?
 The general processing steps are as following:
 
 1. Quality control of your `fastq` read files using tools such as [FASTQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Read our previous section: [Visualizing sequencing data quality](https://read.biostarhandbook.com/data/fastq-quality-visualization.html).
@@ -32,15 +32,19 @@ The general processing steps are as following:
 
 4. Visualizing the resulting peak files and raw signal files.
 
-#### What are IgG control and input control for ChIP-seq?
+### What are IgG control and input control for ChIP-seq?
 Like any other experiments, a control is needed for ChIP-seq. There are two kinds of controls for ChIP-seq: IgG control and input control. IgG control is DNA resulting from a "mock" ChIP with Immunoglobulin G (IgG) antibody, which binds to non-nuclear antigen; input control is DNA purified from cells that are cross-linked, fragmented, but without adding any antibody for enrichment.
 
 One problem with IgG control is that if too little DNA is recovered after immunoprecipitation(IP), sequencing library will be of low complexity and binding sites identified using this control could be biased. Input DNA control is ideal in most of the cases. It represents all the chromatin that was available for IP. Read [this biostars post](https://www.biostars.org/p/15817/) for discussion.
 
 
-#### The data set
+### The data set
 
 Download the data, we will use the data from epigenomeRoadmap project.
+
+**The fastq files are already on the server**: `/course/ChIPseq_lab/fastqs`
+
+you do not have to do the following.
 
 ChIP-Seq input data of IMR90 cell line:
 

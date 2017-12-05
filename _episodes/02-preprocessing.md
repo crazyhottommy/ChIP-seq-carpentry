@@ -4,13 +4,13 @@ teaching: 0
 exercises: 0
 questions:
 - "How to align ChIP-seq fastq files?"
-- "How do you analyze the ChIP-seq data"
+- "How do you analyze the ChIP-seq data?"
 objectives:
 - "Use bowtie1 for mapping reads"
 - "Use MACS for calling peaks"
 keypoints:
-- "bowtie1 is used for short reads < 70bp. ChIP-seq is quite commmon with 36bp reads"
-- "Peak calling"
+- "Input control is critical in controlling false postive peaks"
+- "bedgraph is the raw signal file for visualizing read density"
 ---
 
 ### get the raw fastq data
