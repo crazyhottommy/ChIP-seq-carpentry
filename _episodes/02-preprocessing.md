@@ -13,7 +13,7 @@ keypoints:
 - "Peak calling"
 ---
 
-#### get the raw fastq data
+### get the raw fastq data
 
 ```bash
 ssh test2017@139.52.107.59
@@ -34,7 +34,7 @@ ls
 ```
 
 
-#### quality control
+### quality control
 
 **skip it**
 
@@ -43,7 +43,7 @@ fastqc IMR90_H3K4me3_chr6.fq
 fastqc IMR90_Input_chr6.fq
 ```
 
-#### Alignment
+### Alignment
 
 I will walk through you for the H3K4me3 IP fastq file.
 
@@ -133,17 +133,17 @@ bowtie2  -x /course/ChIPseq_lab/bowtie_index/hg19 -U IMR90_Input_chr6.fq -S |  s
 
 ```
 
-#### get statistics of the bam file
+### get statistics of the bam file
 
 ```bash
 samtools flagstat IMR90_H3K4me3_chr6.bam
 samtools flagstat IMR90_H3K4me3_chr6_rmdup.sorted.bam
 ```
 
-#### your turn to align the Input file
+### your turn to align the Input file
 
 
-#### Peak calling
+### Peak calling
 
 we will use [MACS](http://liulab.dfci.harvard.edu/MACS/) for peak calling, one of the most popular callers.
 
@@ -160,7 +160,7 @@ macs -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -f BAM -g hs --outdir peaks -n IMR90
 macs -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -c IMR90_Input_chr6_rmdup.sorted.bam -f BAM -g hs --outdir peaks -n IMR90_H3K4me3_with_Input -p 1e-5 --bdg
 ```
 
-#### bedtools to compare the peak sets
+### bedtools to compare the peak sets
 
 ```bash
 ## how many peaks?
@@ -172,7 +172,7 @@ wc -l IMR90_H3K4me3_with_Input_peaks.bed
 /bioinfo/intersectBed -a IMR90_H3K4me3_no_Input_peaks.bed -b IMR90_H3K4me3_with_Input_peaks.bed -v > potential_artifact_peaks.bed
 ```
 
-#### visualize in IGV
+### visualize in IGV
 
 peaks and bedgraphs are the two files that you will need to download to your local computer for IGV visualization.
 
