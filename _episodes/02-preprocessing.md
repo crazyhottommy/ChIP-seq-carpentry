@@ -58,7 +58,7 @@ bedtools intersectBed : `/bioinfo/intersectBed`
 
 **Note**: replace all the commands below with the full path of the program.
 
-**Step1:**
+#### step1:
 
 ~~~
 # use only 1 cpu
@@ -79,7 +79,7 @@ sys     0m1.181s
 ~~~
 {: .output}
 
-**step2:**
+#### step2:
 
 ~~~
 ## conver the sam to bam, bam is a binary form of sam
@@ -88,7 +88,7 @@ samtools view -Sb IMR90_H3K4me3_chr6.sam > IMR90_H3K4me3_chr6.bam
 {: .bash}
 
 
-**step3:**
+#### step3:
 
 ~~~
 ## remove duplicates (there is no duplicates in this example)
@@ -99,7 +99,7 @@ samtools rmdup -s IMR90_H3K4me3_chr6.bam IMR90_H3K4me3_chr6_rmdup.bam
 ~~~
 {: .bash}
 
-**step4:**
+#### step4:
 
 ~~~
 ## sort the bam by coordinates
@@ -113,7 +113,7 @@ samtools index IMR90_H3K4me3_chr6_rmdup.sorted.bam
 ~~~
 {: .bash}
 
-**step5:**
+#### step5:
 ~~~
 # check again
 ls
@@ -148,7 +148,7 @@ samtools flagstat IMR90_H3K4me3_chr6_rmdup.sorted.bam
 >> ~~~
 >> {: .bash}
 >>
-> {: .solution}  
+> {: .solution}
 {: .challenge}
 
 ### chain the steps by a pipe
@@ -174,7 +174,7 @@ samtools index IMR90_Input_chr6_rmdup.sorted.bam
 
 we will use [MACS](http://liulab.dfci.harvard.edu/MACS/) for peak calling, one of the most popular callers.
 
-**Step1** peak calling without Input control:
+#### Step1: peak calling without Input control:
 
 ~~~
 ## ~ 10mins to finish
@@ -182,7 +182,7 @@ macs -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -f BAM -g hs --outdir peaks -n IMR90
 ~~~
 {: .bash}
 
-**Step2:** peak calling with Input control
+#### Step2: peak calling with Input control
 
 ~~~
 macs -t IMR90_H3K4me3_chr6_rmdup.sorted.bam -c IMR90_Input_chr6_rmdup.sorted.bam -f BAM -g hs --outdir peaks -n IMR90_H3K4me3_with_Input -p 1e-5 --bdg
@@ -206,7 +206,7 @@ wc -l IMR90_H3K4me3_with_Input_peaks.bed
 
 peaks and bedgraphs are the two files that you will need to download to your local computer for IGV visualization.
 
-**go to your own local computer**
+#### go to your own local computer
 
 ~~~
 mkdir ChIP_seq_lab_results
