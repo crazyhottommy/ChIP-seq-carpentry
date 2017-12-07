@@ -149,7 +149,6 @@ samtools flagstat IMR90_H3K4me3_chr6_rmdup.sorted.bam
 >> {: .bash}
 >>
 > {: .solution}
-
 {: .challenge}
 
 ### chain the steps by a pipe
