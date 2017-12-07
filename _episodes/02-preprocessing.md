@@ -146,7 +146,7 @@ samtools flagstat IMR90_H3K4me3_chr6_rmdup.sorted.bam
 >> samtools sort -m 2G IMR90_Input_chr6_rmdup.bam IMR90_Input_chr6_rmdup.sorted
 >> samtools index IMR90_Input_chr6_rmdup.sorted.bam
 >> ~~~
->> {: .bash}
+>> 
 >>
 > {: .solution}
 {: .challenge}
